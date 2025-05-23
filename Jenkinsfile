@@ -28,6 +28,7 @@ pipeline {
                 echo 'Running tests...'
                 sh '''
                     test -f build/test-results.xml || echo "No test results found"
+                    npm ci
                     npm test
                     ls -al
                 '''
