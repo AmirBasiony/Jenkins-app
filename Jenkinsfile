@@ -20,17 +20,15 @@ pipeline {
         stage ('Test') {
             agent {
                 docker {
-                    image 'node:18-alpine' // Use a lightweight Node.js image
-                    reuseNode true // Reuse the current node,used to allow a shared workspace btw stages
+                    image 'node:18-alpine'
+                    reuseNode true
                 }
             }
+
             steps {
-                echo 'Running tests...'
                 sh '''
-                    test -f test-results/junit.xml || echo "No test results found"
-                    npm ci
+                    test -f build/index.html
                     npm test
-                    ls -al
                 '''
             }
         }
