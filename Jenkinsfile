@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Build-with-docker') {
+        stage('Build') {
             agent {
                 docker {
                     image 'node:18-alpine' // Use a lightweight Node.js image
@@ -17,7 +17,7 @@ pipeline {
                 '''
             }
         }
-        stage ('Test stage') {
+        stage ('Test') {
             agent {
                 docker {
                     image 'node:18-alpine' // Use a lightweight Node.js image
@@ -27,13 +27,24 @@ pipeline {
             steps {
                 echo 'Running tests...'
                 sh '''
-                    ls build
-                    echo '-----------------'
-                    ls -al
+                    test -f build/test-results.xml || echo "No test results found"
                     npm test
                     ls -al
                 '''
             }
+        }
+    }
+
+    post {
+        always {
+            // archiveArtifacts artifacts: 'build/test-results.xml', fingerprint: true
+            junit 'build/test-results.xml'
+        }
+        success {
+            echo 'Build and tests completed successfully!'
+        }
+        failure {
+            echo 'Build or tests failed.'
         }
     }
 }
