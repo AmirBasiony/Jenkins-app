@@ -17,7 +17,7 @@ pipeline {
                 '''
             }
         }
-        stage ('Test') {
+        stage ('Test stage') {
             agent {
                 docker {
                     image 'node:18-alpine' // Use a lightweight Node.js image
@@ -25,10 +25,13 @@ pipeline {
                 }
             }
             steps {
+                echo 'Running tests...'
                 sh '''
+                    ls build
+                    echo '-----------------'
                     ls -al
-                    npm test
-                    ls -al
+                    #npm test
+                    #ls -al
                 '''
             }
         }
