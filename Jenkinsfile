@@ -30,8 +30,8 @@ pipeline {
                     ls build
                     echo '-----------------'
                     ls -al
-                    #npm test
-                    #ls -al
+                    npm test
+                    ls -al
                 '''
             }
         }
