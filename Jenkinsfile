@@ -40,11 +40,5 @@ pipeline {
             // archiveArtifacts artifacts: 'build/test-results.xml', fingerprint: true
             junit 'build/test-results.xml'
         }
-        success {
-            echo 'Build and tests completed successfully!'
-        }
-        failure {
-            echo 'Build or tests failed.'
-        }
     }
 }
