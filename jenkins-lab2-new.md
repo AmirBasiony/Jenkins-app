@@ -13,7 +13,8 @@
 ![Pipeline graph Task 3](Lab-Images/Pipeline-task4.png)
 
 05) create paramterized pipeline 
-
+![Jenkinsfile Task 3](Lab-Images/jankinsfile-task5.png)
+![Pipeline graph Task 3](Lab-Images/pipeline-task5.png)
 06) trigger jenkins pipeline from terminal 
 
 07) activate webhook in github to send commits to jenkins 
