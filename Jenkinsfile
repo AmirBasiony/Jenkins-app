@@ -49,7 +49,8 @@ pipeline {
             steps {
                 sh '''
                     npm install serve                       # Install serve globally
-                    node_modules/.bin/serve -s build      # Serve the build directory
+                    node_modules/.bin/serve -s build &     # Serve the build directory
+                    sleep 10
                     npx playwright test                 # Run Playwright tests
                 '''
             }
