@@ -51,7 +51,8 @@ pipeline {
                     npm install serve                       # Install serve globally
                     node_modules/.bin/serve -s build &     # Serve the build directory
                     sleep 10
-                    npx playwright test                 # Run Playwright tests
+                    npx playwright test --reporter=html # Run Playwright tests with HTML reporter
+                    
                 '''
             }
         }
