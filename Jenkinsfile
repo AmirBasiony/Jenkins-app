@@ -38,9 +38,9 @@ pipeline {
         }
     }
 
-    // post {
-    //     always {
-    //         junit 'test-results/junit.xml' // Publish test results (commented out)
-    //     }
-    // }
+    post {
+        always {
+            junit 'test-results/junit.xml' // Publish test results (commented out)
+        }
+    }
 }
