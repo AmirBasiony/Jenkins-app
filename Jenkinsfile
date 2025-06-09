@@ -33,7 +33,7 @@ pipeline {
             steps {
                 sh '''
                     test -f build/index.html # Verify build output exists
-                    npm test # Run tests
+                    npm test # Run unit tests using npm
                 '''
             }
         }
@@ -41,18 +41,17 @@ pipeline {
         stage('E2E Tests') {
             agent {
                 docker {
-                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy' // Use Playwright Docker image for E2E tests 
+                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy' // Use Playwright Docker image for end-to-end tests
                     reuseNode true // Reuse the same node for this stage
                 }
             }
 
             steps {
                 sh '''
-                    npm install serve                       # Install serve globally
-                    node_modules/.bin/serve -s build &     # Serve the build directory
-                    sleep 10
-                    npx playwright test --reporter=html # Run Playwright tests with HTML reporter
-                    
+                    npm install serve                       # Install serve locally to serve the build directory
+                    node_modules/.bin/serve -s build &     # Start serving the build directory in the background
+                    sleep 10                               # Wait for the server to start
+                    npx playwright test --reporter=html    # Run Playwright end-to-end tests with HTML reporter
                 '''
             }
         }
@@ -60,7 +59,8 @@ pipeline {
 
     post {
         always {
-            junit 'jest-results/junit.xml' // Publish test results (commented out)
+            // Publish test results and HTML reports after the pipeline execution
+            junit 'jest-results/junit.xml' // Publish JUnit test results
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
         }
     }
